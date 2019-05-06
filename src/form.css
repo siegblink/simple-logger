@@ -1,0 +1,43 @@
+.form-container {
+  display: grid;
+  grid-gap: 10px 30px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: minmax(50px, auto);
+  grid-template-areas: 'name job';
+}
+
+.name {
+  grid-area: name;
+}
+
+.job {
+  grid-area: job;
+}
+
+.submithandler {
+  float: right;
+}
+
+.summary-container {
+  display: flex;
+  justify-content: space-between
+}
+
+.delete {
+  margin-left: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.delete:hover {
+  color: violet;
+}
+
+strong {
+  font-size: 110%;
+}
+
+em {
+  margin-left: 30px;
+}
