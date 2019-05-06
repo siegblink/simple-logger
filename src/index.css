@@ -912,3 +912,8 @@ caption {
   =============== */
 /* Layout
   =============== */
+
+.no-border {
+  border: none;
+  outline: none;
+}

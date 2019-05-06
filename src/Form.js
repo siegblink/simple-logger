@@ -1,57 +1,64 @@
-import React, { Component } from 'react'
+import React, { useState, Fragment } from 'react'
+import Summary from './Summary'
+import './form.css'
 
-class Form extends Component {
-  constructor(props) {
-    super(props)
+export default function Form(props) {
+  const [name, setName] = useState('')
+  const [job, setJob] = useState('')
 
-    this.initialState = {
-      name: '',
-      job: '',
-    }
-
-    this.state = this.initialState
+  const submitForm = () => {
+    props.handleSubmit({ name: name, job: job })
+    setName('')
+    setJob('')
   }
 
-  handleChange = event => {
-    const { name, value } = event.target
+  const list =
+    props.data.length === 0 ? (
+      <p>No data to display</p>
+    ) : (
+      props.data.map(({ name, job }, index) => (
+        <div key={index} className='summary-container'>
+          <Summary name={name} job={job} />
+          <div onClick={() => props.removeChar(index)} className='delete'>
+            Delete
+          </div>
+        </div>
+      ))
+    )
 
-    this.setState({
-      [name]: value,
-    })
-  }
+  return (
+    <Fragment>
+      <div>
+        <h3>List</h3>
+        {list}
+      </div>
 
-  submitForm = () => {
-    this.props.handleSubmit(this.state)
-    this.setState(this.initialState)
-  }
-
-  render() {
-    const { name, job } = this.state
-
-    return (
-      <form>
-        <label>
+      <div className='form-container'>
+        <label className='name' htmlFor='name'>
           Name
           <input
             type='text'
-            name='name'
+            id='name'
             value={name}
-            onChange={this.handleChange}
+            onChange={e => setName(e.target.value)}
           />
         </label>
-        <label>
+        <label className='job' htmlFor='job'>
           Job
           <input
             type='text'
-            name='job'
+            id='job'
             value={job}
-            onChange={this.handleChange}
+            onChange={e => setJob(e.target.value)}
           />
-          <input type='button' value='Submit' onClick={this.submitForm} />
         </label>
-      </form>
-    )
-  }
+      </div>
+      <input
+        className='submithandler'
+        type='button'
+        value='Submit'
+        onClick={submitForm}
+      />
+    </Fragment>
+  )
 }
-
-export default Form

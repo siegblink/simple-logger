@@ -1,39 +1,20 @@
-import React, { Component } from 'react'
-import Table from './Table'
+import React, { useState } from 'react'
 import Form from './Form'
 
-class App extends Component {
-  state = {
-    characters: [],
+export default function App() {
+  const [state, setState] = useState([])
+
+  const removeChar = index => {
+    setState(state.filter((item, idx) => idx !== index))
   }
 
-  removeCharacter = index => {
-    const { characters } = this.state
-
-    this.setState({
-      characters: characters.filter((character, idx) => {
-        return idx !== index
-      }),
-    })
+  const handleSubmit = character => {
+    setState([...state, character])
   }
 
-  handleSubmit = character => {
-    this.setState({ characters: [...this.state.characters, character] })
-  }
-
-  render() {
-    const { characters } = this.state
-
-    return (
-      <div className='container'>
-        <Table
-          characterData={characters}
-          removeCharacter={this.removeCharacter}
-        />
-        <Form handleSubmit={this.handleSubmit} />
-      </div>
-    )
-  }
+  return (
+    <div className='container'>
+      <Form data={state} handleSubmit={handleSubmit} removeChar={removeChar} />
+    </div>
+  )
 }
-
-export default App
